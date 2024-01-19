@@ -1,8 +1,14 @@
 package com.StudyGo.controller;
 
+import com.StudyGo.dto.ToDoListDTO;
+import com.StudyGo.model.ToDoList;
 import com.StudyGo.model.User;
+import com.StudyGo.repository.ToDoListRepository;
+import com.StudyGo.service.ToDoListService;
 import com.StudyGo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +20,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private ToDoListService toDoListService;
 
     @PostMapping("/add")
     public String add(@RequestBody User user) {
@@ -24,5 +32,18 @@ public class UserController {
     @GetMapping("/getAll")
     public List<User> getAllUsers()  {
         return userService.getAllUsers();
+    }
+
+    @PostMapping("/{userId}/toDoList")
+    public ResponseEntity<String> addToDoList(@PathVariable Long userId, @RequestBody ToDoListDTO request){
+        User user = userService.loadUserById(userId);
+        ToDoList toDoList = new ToDoList();
+        toDoList.setName(request.getName());
+        toDoList.setUser(user);
+        toDoListService.saveToDoList(toDoList);
+        user.getToDoLists().add(toDoList);
+        userService.saveUser(user);
+
+        return new ResponseEntity<>("ToDoList created successfully!", HttpStatus.OK);
     }
 }

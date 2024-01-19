@@ -1,9 +1,7 @@
 package com.StudyGo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,5 +14,10 @@ public class ToDo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Boolean done;
+    private boolean done;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "todolist_id")
+    @JsonIgnore
+    private ToDoList toDoList;
 }

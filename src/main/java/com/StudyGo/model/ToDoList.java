@@ -17,7 +17,7 @@ public class ToDoList {
     private Long id;
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "toDoList", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ToDo> toDos = new ArrayList<>();
 
     @ManyToOne

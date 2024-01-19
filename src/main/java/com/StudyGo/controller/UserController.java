@@ -41,6 +41,7 @@ public class UserController {
         toDoList.setName(request.getName());
         toDoList.setUser(user);
         toDoListService.saveToDoList(toDoList);
+
         user.getToDoLists().add(toDoList);
         userService.saveUser(user);
 

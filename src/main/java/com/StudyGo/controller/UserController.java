@@ -1,9 +1,12 @@
 package com.StudyGo.controller;
 
+import com.StudyGo.dto.StudyPlanActionDTO;
 import com.StudyGo.dto.ToDoListDTO;
+import com.StudyGo.model.StudyPlanAction;
 import com.StudyGo.model.ToDoList;
 import com.StudyGo.model.User;
 import com.StudyGo.repository.ToDoListRepository;
+import com.StudyGo.service.StudyPlanActionService;
 import com.StudyGo.service.ToDoListService;
 import com.StudyGo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private ToDoListService toDoListService;
+    @Autowired
+    private StudyPlanActionService studyPlanActionService;
 
     @PostMapping("/add")
     public String add(@RequestBody User user) {
@@ -42,15 +47,13 @@ public class UserController {
 
     @PostMapping("/{userId}/toDoList")
     public ResponseEntity<String> addToDoList(@PathVariable Long userId, @RequestBody ToDoListDTO request){
-        User user = userService.loadUserById(userId);
-        ToDoList toDoList = new ToDoList();
-        toDoList.setName(request.getName());
-        toDoList.setUser(user);
-        toDoListService.saveToDoList(toDoList);
-
-        user.getToDoLists().add(toDoList);
-        userService.saveUser(user);
-
+        toDoListService.addToDoListToUser(userId, request);
         return new ResponseEntity<>("ToDoList created successfully!", HttpStatus.OK);
+    }
+
+    @PostMapping("/{userId}/studyPlanAction")
+    public ResponseEntity<String> addStudyPlanAction(@PathVariable Long userId, @RequestBody StudyPlanActionDTO request){
+        studyPlanActionService.addStudyPlanActionToUser(userId, request);
+        return new ResponseEntity<>("StudyPlanAction created successfully!", HttpStatus.OK);
     }
 }

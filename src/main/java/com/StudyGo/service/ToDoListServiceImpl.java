@@ -1,10 +1,13 @@
 package com.StudyGo.service;
 
+import com.StudyGo.dto.ToDoListDTO;
 import com.StudyGo.model.ToDoList;
+import com.StudyGo.model.User;
 import com.StudyGo.repository.ToDoListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.NoSuchElementException;
@@ -13,6 +16,8 @@ import java.util.NoSuchElementException;
 public class ToDoListServiceImpl implements ToDoListService{
     @Autowired
     private ToDoListRepository toDoListRepository;
+    @Autowired
+    private UserService userService;
 
     @Override
     public ToDoList loadToDoListById(Long toDoListId) throws NoSuchElementException {
@@ -20,8 +25,25 @@ public class ToDoListServiceImpl implements ToDoListService{
     }
 
     @Override
-    public void saveToDoList(ToDoList toDoList) {
-        toDoListRepository.save(toDoList);
+    @Transactional
+    public ToDoList addToDoListToUser(Long userId, ToDoListDTO toDoListDTO) {
+        User user = userService.loadUserById(userId);
+
+        ToDoList toDoList = new ToDoList();
+        toDoList.setName(toDoListDTO.getName());
+        toDoList.setUser(user);
+
+        ToDoList savedToDoList = saveToDoList(toDoList);
+
+        user.getToDoLists().add(savedToDoList);
+        userService.saveUser(user);
+
+        return savedToDoList;
+    }
+
+    @Override
+    public ToDoList saveToDoList(ToDoList toDoList) {
+        return toDoListRepository.save(toDoList);
     }
 
     @Override

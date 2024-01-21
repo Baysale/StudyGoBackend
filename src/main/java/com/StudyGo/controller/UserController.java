@@ -34,7 +34,7 @@ public class UserController {
         return "New User added";
     }
 
-    @GetMapping("/getAll")
+    @GetMapping()
     public List<User> getAllUsers()  {
         return userService.getAllUsers();
     }

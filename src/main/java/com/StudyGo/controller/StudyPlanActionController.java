@@ -39,6 +39,6 @@ public class StudyPlanActionController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteStudyPlanAction(@PathVariable Long id) {
         studyPlanActionService.deleteStudyPlanAction(id);
-        return ResponseEntity.ok().body("StudyPlan successfully deleted");
+        return ResponseEntity.ok().body("StudyPlanAction successfully deleted");
     }
 }

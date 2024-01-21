@@ -1,11 +1,9 @@
 package com.StudyGo.controller;
 
 import com.StudyGo.dto.StudyPlanActionDTO;
-import com.StudyGo.dto.ToDoListDTO;
-import com.StudyGo.model.StudyPlanAction;
-import com.StudyGo.model.ToDoList;
+import com.StudyGo.dto.RequestNameDTO;
 import com.StudyGo.model.User;
-import com.StudyGo.repository.ToDoListRepository;
+import com.StudyGo.service.FlashCardCategoryService;
 import com.StudyGo.service.StudyPlanActionService;
 import com.StudyGo.service.ToDoListService;
 import com.StudyGo.service.UserService;
@@ -27,6 +25,8 @@ public class UserController {
     private ToDoListService toDoListService;
     @Autowired
     private StudyPlanActionService studyPlanActionService;
+    @Autowired
+    private FlashCardCategoryService flashCardCategoryService;
 
     @PostMapping("/add")
     public String add(@RequestBody User user) {
@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/toDoList")
-    public ResponseEntity<String> addToDoList(@PathVariable Long userId, @RequestBody ToDoListDTO request){
+    public ResponseEntity<String> addToDoList(@PathVariable Long userId, @RequestBody RequestNameDTO request){
         toDoListService.addToDoListToUser(userId, request);
         return new ResponseEntity<>("ToDoList created successfully!", HttpStatus.OK);
     }
@@ -55,5 +55,11 @@ public class UserController {
     public ResponseEntity<String> addStudyPlanAction(@PathVariable Long userId, @RequestBody StudyPlanActionDTO request){
         studyPlanActionService.addStudyPlanActionToUser(userId, request);
         return new ResponseEntity<>("StudyPlanAction created successfully!", HttpStatus.OK);
+    }
+
+    @PostMapping("/{userId}/flashCardCategory")
+    public ResponseEntity<String> addFlashCardCategory(@PathVariable Long userId, @RequestBody RequestNameDTO request){
+        flashCardCategoryService.addFlashCardCategoryToUser(userId, request);
+        return new ResponseEntity<>("FlashCardCategory created successfully!", HttpStatus.OK);
     }
 }

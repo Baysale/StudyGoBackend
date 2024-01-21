@@ -1,6 +1,6 @@
 package com.StudyGo.service;
 
-import com.StudyGo.dto.ToDoListDTO;
+import com.StudyGo.dto.RequestNameDTO;
 import com.StudyGo.model.ToDo;
 import com.StudyGo.model.ToDoList;
 import com.StudyGo.repository.ToDoListRepository;
@@ -20,7 +20,7 @@ public class ToDoServiceImpl implements ToDoService{
 
     @Override
     @Transactional
-    public ToDo createToDoAndAddToToDoList(Long toDoListId, ToDoListDTO requestBody) {
+    public ToDo createToDoAndAddToToDoList(Long toDoListId, RequestNameDTO requestBody) {
         ToDoList toDoList = toDoListRepository.findById(toDoListId)
                 .orElseThrow(() -> new RuntimeException("ToDoList not found with id " + toDoListId));
         ToDo toDo = new ToDo();

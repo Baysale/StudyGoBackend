@@ -3,6 +3,6 @@ package com.StudyGo.dto;
 import lombok.Data;
 
 @Data
-public class ToDoListDTO {
+public class RequestNameDTO {
     private String name;
 }

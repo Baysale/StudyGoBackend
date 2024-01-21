@@ -1,9 +1,8 @@
 package com.StudyGo.controller;
 
-import com.StudyGo.dto.ToDoListDTO;
+import com.StudyGo.dto.RequestNameDTO;
 import com.StudyGo.model.ToDo;
 import com.StudyGo.model.ToDoList;
-import com.StudyGo.model.User;
 import com.StudyGo.service.ToDoListService;
 import com.StudyGo.service.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +41,7 @@ public class ToDoListController {
 
     @PostMapping("/{toDoListId}/todo")
     public ResponseEntity<ToDo> createToDo(@PathVariable Long toDoListId,
-                                           @RequestBody ToDoListDTO requestBody) {
+                                           @RequestBody RequestNameDTO requestBody) {
         ToDo createdToDo = toDoService.createToDoAndAddToToDoList(toDoListId, requestBody);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdToDo);
     }

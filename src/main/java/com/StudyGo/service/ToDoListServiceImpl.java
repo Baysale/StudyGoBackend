@@ -1,6 +1,6 @@
 package com.StudyGo.service;
 
-import com.StudyGo.dto.ToDoListDTO;
+import com.StudyGo.dto.RequestNameDTO;
 import com.StudyGo.model.ToDoList;
 import com.StudyGo.model.User;
 import com.StudyGo.repository.ToDoListRepository;
@@ -26,11 +26,11 @@ public class ToDoListServiceImpl implements ToDoListService{
 
     @Override
     @Transactional
-    public ToDoList addToDoListToUser(Long userId, ToDoListDTO toDoListDTO) {
+    public ToDoList addToDoListToUser(Long userId, RequestNameDTO requestNameDTO) {
         User user = userService.loadUserById(userId);
 
         ToDoList toDoList = new ToDoList();
-        toDoList.setName(toDoListDTO.getName());
+        toDoList.setName(requestNameDTO.getName());
         toDoList.setUser(user);
 
         ToDoList savedToDoList = saveToDoList(toDoList);
@@ -56,8 +56,7 @@ public class ToDoListServiceImpl implements ToDoListService{
 
     @Override
     public void deleteToDoList(Long id) {
-        ToDoList toDoList = toDoListRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ToDoList not found"));
+        ToDoList toDoList = loadToDoListById(id);
         toDoListRepository.delete(toDoList);
     }
 }

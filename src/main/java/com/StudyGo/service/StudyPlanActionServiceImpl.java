@@ -78,9 +78,7 @@ public class StudyPlanActionServiceImpl implements StudyPlanActionService{
     @Override
     @Transactional
     public void deleteStudyPlanAction(Long id) {
-        StudyPlanAction studyPlanAction = studyPlanActionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("StudyPlanAction not found with id " + id));
-
+        StudyPlanAction studyPlanAction = loadStudyPlanActionById(id);
         studyPlanActionRepository.delete(studyPlanAction);
     }
 }

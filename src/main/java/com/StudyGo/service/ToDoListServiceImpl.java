@@ -1,6 +1,7 @@
 package com.StudyGo.service;
 
 import com.StudyGo.dto.RequestNameDTO;
+import com.StudyGo.model.MonthEnum;
 import com.StudyGo.model.ToDoList;
 import com.StudyGo.model.User;
 import com.StudyGo.repository.ToDoListRepository;
@@ -18,6 +19,8 @@ public class ToDoListServiceImpl implements ToDoListService{
     private ToDoListRepository toDoListRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ToDoService toDoService;
 
     @Override
     public ToDoList loadToDoListById(Long toDoListId) throws NoSuchElementException {
@@ -37,6 +40,25 @@ public class ToDoListServiceImpl implements ToDoListService{
 
         user.getToDoLists().add(savedToDoList);
         userService.saveUser(user);
+
+        return savedToDoList;
+    }
+
+    @Override
+    @Transactional
+    public ToDoList mapStudyPlanActionsToToDoList(Long userId, int month) {
+        User user = userService.loadUserById(userId);
+
+        ToDoList toDoList = new ToDoList();
+        toDoList.setName(MonthEnum.fromMonthValue(month).getMonthName());
+        toDoList.setUser(user);
+
+        ToDoList savedToDoList = saveToDoList(toDoList);
+
+        user.getToDoLists().add(savedToDoList);
+        userService.saveUser(user);
+
+        user.getStudyPlanActions().stream().filter(studyPlanAction -> studyPlanAction.getFromDate().getMonthValue() == month || studyPlanAction.getToDate().getMonthValue() == month).forEach(studyPlanAction -> toDoService.createToDoAndAddToToDoList(toDoList.getId(), new RequestNameDTO(studyPlanAction.getName())));
 
         return savedToDoList;
     }

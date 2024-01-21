@@ -62,4 +62,10 @@ public class UserController {
         flashCardCategoryService.addFlashCardCategoryToUser(userId, request);
         return new ResponseEntity<>("FlashCardCategory created successfully!", HttpStatus.OK);
     }
+
+    @PostMapping("/{userId}/toDoList/{month}")
+    public ResponseEntity<String> mapStudyPlanActionsToToDoList(@PathVariable Long userId, @PathVariable int month){
+        toDoListService.mapStudyPlanActionsToToDoList(userId, month);
+        return new ResponseEntity<>("ToDoList created successfully from Studyplan!", HttpStatus.OK);
+    }
 }

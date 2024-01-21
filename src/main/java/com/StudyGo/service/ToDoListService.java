@@ -6,6 +6,7 @@ import com.StudyGo.model.ToDoList;
 public interface ToDoListService {
     public ToDoList saveToDoList(ToDoList toDoList);
     public ToDoList addToDoListToUser(Long userId, RequestNameDTO requestNameDTO);
+    public ToDoList mapStudyPlanActionsToToDoList(Long userId, int month);
     public ToDoList updateToDoListName(Long id, String newName);
     public void deleteToDoList(Long id);
     public ToDoList loadToDoListById(Long toDoListId);

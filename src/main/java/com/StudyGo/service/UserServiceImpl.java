@@ -29,4 +29,12 @@ public class UserServiceImpl implements UserService{
     public User loadUserById(Long userId) throws NoSuchElementException {
         return userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException(userId + " does not exist"));
     }
+    @Override
+    public User loadUserByUserName(String username) throws NoSuchElementException {
+        return userRepository.findByUserName(username).orElseThrow(() -> new NoSuchElementException(username + " does not exist"));
+    }
+    @Override
+    public boolean existsByUserName(String username) {
+        return userRepository.existsByUserName(username);
+    }
 }

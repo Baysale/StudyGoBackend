@@ -8,6 +8,7 @@ import com.StudyGo.model.Role;
 import com.StudyGo.model.User;
 import com.StudyGo.repository.RoleRepository;
 import com.StudyGo.repository.UserRepository;
+import com.StudyGo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
     @Autowired
     private RoleRepository roleRepository;
     @Autowired
@@ -39,7 +40,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO) {
-        if(userRepository.existsByUserName(registerDTO.getUsername())) {
+        if(userService.existsByUserName(registerDTO.getUsername())) {
             return new ResponseEntity<>("Username is taken!", HttpStatus.BAD_REQUEST);
         }
 
@@ -50,7 +51,7 @@ public class AuthController {
         Role roles = roleRepository.findByName("USER").get();
         user.setRoles(Collections.singletonList(roles));
 
-        userRepository.save(user);
+        userService.saveUser(user);
 
         return new ResponseEntity<>("User registered successfully!", HttpStatus.OK);
     }
@@ -62,6 +63,7 @@ public class AuthController {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtGenerator.generateToken(authentication);
-        return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
+        Long userId = userService.loadUserByUserName(loginDTO.getUsername()).getId();
+        return new ResponseEntity<>(new AuthResponseDTO(userId, token), HttpStatus.OK);
     }
 }

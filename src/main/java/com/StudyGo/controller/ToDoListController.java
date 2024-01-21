@@ -34,7 +34,7 @@ public class ToDoListController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteToDoList(@PathVariable Long id) {
+    public ResponseEntity<String> deleteToDoList(@PathVariable Long id) {
         toDoListService.deleteToDoList(id);
         return ResponseEntity.ok().build();
     }

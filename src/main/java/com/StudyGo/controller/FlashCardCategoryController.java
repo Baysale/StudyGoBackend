@@ -2,10 +2,8 @@ package com.StudyGo.controller;
 
 import com.StudyGo.dto.FlashCardDTO;
 import com.StudyGo.dto.RequestNameDTO;
-import com.StudyGo.dto.StudyPlanActionDTO;
 import com.StudyGo.model.FlashCard;
 import com.StudyGo.model.FlashCardCategory;
-import com.StudyGo.model.StudyPlanAction;
 import com.StudyGo.service.FlashCardCategoryService;
 import com.StudyGo.service.FlashCardService;
 import org.springframework.beans.factory.annotation.Autowired;

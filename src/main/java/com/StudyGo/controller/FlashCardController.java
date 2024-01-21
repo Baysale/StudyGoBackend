@@ -1,12 +1,9 @@
 package com.StudyGo.controller;
 
 import com.StudyGo.dto.FlashCardDTO;
-import com.StudyGo.dto.RequestNameDTO;
 import com.StudyGo.model.FlashCard;
-import com.StudyGo.model.ToDo;
 import com.StudyGo.service.FlashCardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

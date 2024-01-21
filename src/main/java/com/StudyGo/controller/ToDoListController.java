@@ -3,6 +3,7 @@ package com.StudyGo.controller;
 import com.StudyGo.dto.ToDoListDTO;
 import com.StudyGo.model.ToDo;
 import com.StudyGo.model.ToDoList;
+import com.StudyGo.model.User;
 import com.StudyGo.service.ToDoListService;
 import com.StudyGo.service.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,12 @@ public class ToDoListController {
     private ToDoListService toDoListService;
     @Autowired
     private ToDoService toDoService;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ToDoList> getToDoListById(@PathVariable Long id) {
+        ToDoList toDoList = toDoListService.loadToDoListById(id);
+        return ResponseEntity.ok(toDoList);
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<ToDoList> updateToDoList(@PathVariable Long id,

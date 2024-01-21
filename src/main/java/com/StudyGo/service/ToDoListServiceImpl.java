@@ -7,10 +7,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.NoSuchElementException;
+
 @Service
 public class ToDoListServiceImpl implements ToDoListService{
     @Autowired
     private ToDoListRepository toDoListRepository;
+
+    @Override
+    public ToDoList loadToDoListById(Long toDoListId) throws NoSuchElementException {
+        return toDoListRepository.findById(toDoListId).orElseThrow(() -> new NoSuchElementException(toDoListId + " does not exist"));
+    }
 
     @Override
     public void saveToDoList(ToDoList toDoList) {

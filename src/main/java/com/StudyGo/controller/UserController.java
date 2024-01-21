@@ -34,6 +34,12 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        User user = userService.loadUserById(id);
+        return ResponseEntity.ok(user);
+    }
+
     @PostMapping("/{userId}/toDoList")
     public ResponseEntity<String> addToDoList(@PathVariable Long userId, @RequestBody ToDoListDTO request){
         User user = userService.loadUserById(userId);

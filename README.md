@@ -11,6 +11,13 @@ Stellen Sie sicher, dass folgende Software auf Ihrem System installiert ist:
 - Maven (für das Build-Management)
 - XAMPP (für MySQL-Datenbank)
 
+## Projekt-Setup
+Klonen Sie das Repository oder entpacken Sie das Projektarchiv in einen geeigneten Ordner auf Ihrem Computer.
+Navigieren Sie im Terminal oder in der Kommandozeile in das Hauptverzeichnis des Projekts.
+
+## Anwendung starten
+Starten Sie die main Methode in StudyGoApplication
+
 ## Schritte zur Einrichtung
 1. XAMPP und MySQL starten
    Starten Sie XAMPP und aktivieren Sie den MySQL-Dienst.
@@ -21,13 +28,6 @@ Stellen Sie sicher, dass folgende Software auf Ihrem System installiert ist:
    1. Erstellen Sie eine neue Datenbank namens studygo.
 
    2. Wählen Sie die Datenbank studygo aus und öffnen Sie die SQL-Kommandozeile.
-   3. Starten Sie die Anwendung über IntelliJ damit die Tabellen erstellt werden (Punkt 4).
+   3. Starten Sie die Anwendung über IntelliJ damit die Tabellen erstellt werden.
    4. Führen Sie das folgende SQL-Befehl aus, um die Rolle USER hinzuzufügen: ``INSERT INTO Role (id, name) VALUES (1, 'USER')``
 
-
-3. Projekt-Setup
-   Klonen Sie das Repository oder entpacken Sie das Projektarchiv in einen geeigneten Ordner auf Ihrem Computer.
-Navigieren Sie im Terminal oder in der Kommandozeile in das Hauptverzeichnis des Projekts.
-
-4. Anwendung starten
-   Starten Sie die main Methode in StudyGoApplication
